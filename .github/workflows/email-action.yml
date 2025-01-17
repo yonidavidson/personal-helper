@@ -18,9 +18,9 @@ jobs:
           --mail-from hello@demomailtrap.com \
           --mail-rcpt yonidavidson@gmail.com \
           --upload-file - <<EOF
-          From: Magic Elves <hello@demomailtrap.com>
-          To: Mailtrap Inbox <yonidavidson@gmail.com>
-          Subject: You are awesome!
+          From: Health Reminder <hello@demomailtrap.com>
+          To: Daily Health <yonidavidson@gmail.com>
+          Subject: Daily Health Reminder
           Content-Type: multipart/alternative; boundary="boundary-string"
 
           --boundary-string
@@ -28,7 +28,14 @@ jobs:
           Content-Transfer-Encoding: quoted-printable
           Content-Disposition: inline
 
-          keep your health by not eating too much
+          Daily Health Reminders:
+          - Stay hydrated - drink water regularly
+          - Take breaks and stretch
+          - Maintain good posture
+          - Get enough sleep
+          - Eat balanced meals
+          
+          Stay healthy! 💪
 
           --boundary-string
           Content-Type: text/html; charset="utf-8"
@@ -40,19 +47,20 @@ jobs:
             <head>
               <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF-8">
             </head>
-            <body style=3D"font-family: sans-serif;">
-              <div style=3D"display: block; margin: auto; max-width: 600px;" class=3D"main">
-                <h1 style=3D"font-size: 18px; font-weight: bold; margin-top: 20px">keep your health by not eating too much</h1>
-                <p>If you are viewing this email in your inbox =E2=80=93 the integration works.</p>
-                <img alt=3D"Inspect with Tabs" src=3D"https://assets-examples.mailtrap.io/integration-examples/welcome.png" style=3D"width: 100%;">
-                <p>Now send your email using our SMTP server and integration of your choice!</p>
-                <p>Good luck! Hope it works.</p>
+            <body style=3D"font-family: sans-serif; background-color: #f5f5f5;">
+              <div style=3D"display: block; margin: auto; max-width: 600px; padding: 20px; background-color: white; border-radius: 8px;">
+                <h1 style=3D"font-size: 24px; color: #2c3e50; text-align: center;">Daily Health Reminder</h1>
+                <div style=3D"margin: 20px 0;">
+                  <ul style=3D"list-style-type: none; padding: 0;">
+                    <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">💧 Stay hydrated - drink water regularly</li>
+                    <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">🧘‍♂️ Take breaks and stretch</li>
+                    <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">🪑 Maintain good posture</li>
+                    <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">😴 Get enough sleep</li>
+                    <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">🥗 Eat balanced meals</li>
+                  </ul>
+                </div>
+                <p style=3D"text-align: center; font-weight: bold; color: #2c3e50;">Stay healthy! 💪</p>
               </div>
-              <!-- Example of invalid for email html/css, will be detected by Mailtrap: -->
-              <style>
-                .main { background-color: white; }
-                a:hover { border-left-width: 1em; min-height: 2em; }
-              </style>
             </body>
           </html>
 
