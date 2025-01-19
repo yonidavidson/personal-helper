@@ -9,6 +9,26 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Health Quote
+        id: get_quote
+        run: |
+          RESPONSE=$(curl https://api.openai.com/v1/chat/completions \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer ${{ secrets.OPEN_AI_TOKEN }}" \
+            -d '{
+              "model": "gpt-4o-mini",
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "Generate a short, inspiring quote about health and wellness (max 100 characters). Return just the quote without quotation marks."
+                }
+              ],
+              "max_tokens": 50,
+              "temperature": 0.7
+            }')
+          QUOTE=$(echo $RESPONSE | jq -r '.choices[0].message.content')
+          echo "quote=$QUOTE" >> $GITHUB_ENV
+
       - name: Send Email
         run: |
           curl \
@@ -35,6 +55,9 @@ jobs:
           - Get enough sleep
           - Eat balanced meals
           
+          Quote of the day:
+          ${{ env.quote }}
+          
           Stay healthy! 💪
 
           --boundary-string
@@ -59,6 +82,7 @@ jobs:
                     <li style=3D"margin: 10px 0; padding: 10px; background-color: #f8f9fa; border-radius: 4px;">🥗 Eat balanced meals</li>
                   </ul>
                 </div>
+                <p style=3D"text-align: center; font-style: italic; color: #34495e; margin: 20px 0;">Quote of the day:<br>${{ env.quote }}</p>
                 <p style=3D"text-align: center; font-weight: bold; color: #2c3e50;">Stay healthy! 💪</p>
               </div>
             </body>
