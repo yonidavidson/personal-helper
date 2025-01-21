@@ -36,10 +36,10 @@ jobs:
           --url 'smtp://live.smtp.mailtrap.io:587' \
           --user 'api:${{ secrets.SMTP_PASSWORD }}' \
           --mail-from hello@demomailtrap.com \
-          --mail-rcpt yonidavidson@gmail.com \
+          --mail-rcpt ${{ secrets.RECIPIENT_EMAIL }} \
           --upload-file - <<EOF
           From: Health Reminder <hello@demomailtrap.com>
-          To: Daily Health <yonidavidson@gmail.com>
+          To: Daily Health <${{ secrets.RECIPIENT_EMAIL }}>
           Subject: Daily Health Reminder
           Content-Type: multipart/alternative; boundary="boundary-string"
 
@@ -90,9 +90,4 @@ jobs:
 
           --boundary-string--
           EOF
-        env:
-          recipient_email: 'yonidavidson@gmail.com'
-          sender_email: 'hello@demomailtrap.com'
-          smtp_server: 'live.smtp.mailtrap.io'
-          smtp_username: 'api'
-          smtp_password: '${{ secrets.SMTP_PASSWORD }}'
+        env: {}
