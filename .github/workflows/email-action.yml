@@ -9,6 +9,12 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Get Health News
+        id: get_news
+        run: |
+          NEWS=$(curl -s "https://newsapi.org/v2/top-headlines?category=health&apiKey=${{ secrets.NEWS_API_KEY }}" | jq -r '.articles[0].title')
+          echo "news=$NEWS" >> $GITHUB_ENV
+
       - name: Get Health Quote
         id: get_quote
         run: |
@@ -20,7 +26,7 @@ jobs:
               "messages": [
                 {
                   "role": "user",
-                  "content": "Generate a short, inspiring quote about health and wellness (max 100 characters). Return just the quote without quotation marks."
+                  "content": "Using this health-related headline as context: \"${{ env.news }}\", generate a unique and inspiring health quote (max 100 characters) that relates to current wellness trends and seasonal health considerations. Make it specific and actionable. Return just the quote without quotation marks."
                 }
               ],
               "max_tokens": 50,
@@ -28,7 +34,6 @@ jobs:
             }')
           QUOTE=$(echo $RESPONSE | jq -r '.choices[0].message.content')
           echo "quote=$QUOTE" >> $GITHUB_ENV
-
       - name: Send Email
         run: |
           curl \
