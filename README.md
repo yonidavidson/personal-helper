@@ -1,51 +1,41 @@
-# personal-helper
-My personal Helper
+# Daily Health Email Notification GitHub Action
 
-## GitHub Action: Daily Email Notification
+## Overview
 
-This GitHub Action sends an email every morning at 0800.
+This GitHub Action sends a daily health reminder email with:
+- Latest health news headline
+- An AI-generated inspirational health quote
+- Key health tips
+- Formatted in both plain text and HTML
 
-### Configuration
+## Prerequisites
 
-To configure the email recipient, follow these steps:
+Before using this action, you'll need to set up the following secrets in your GitHub repository:
 
-1. Open the `.github/workflows/email-action.yml` file.
-2. Locate the `recipient_email` environment variable.
-3. Replace the placeholder email address with the desired recipient's email address.
+1. `NEWS_API_KEY`: API key from NewsAPI for fetching health headlines
+2. `OPEN_AI_TOKEN`: OpenAI API token for quote generation
+3. `SMTP_PASSWORD`: Password for SMTP service
+4. `RECIPIENT_EMAIL`: Email address of the recipient
 
-### Example
+## Workflow Configuration
+
+The action is scheduled to run daily at 5:00 AM UTC using a cron job.
 
 ```yaml
-name: Daily Email Notification
-
 on:
   schedule:
-    - cron: '0 8 * * *'
-
-jobs:
-  send-email:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Email
-        run: |
-          curl -s --url 'smtps://smtp.example.com:465' --ssl-reqd \
-            --mail-from 'sender@example.com' \
-            --mail-rcpt 'recipient@example.com' \
-            --user 'username:password' \
-            -T <(echo -e "From: sender@example.com\nTo: recipient@example.com\nSubject: Daily Notification\n\nThis is your daily notification.")
-        env:
-          recipient_email: 'recipient@example.com'
-          sender_email: 'sender@example.com'
-          smtp_server: 'smtp.example.com'
-          smtp_username: 'username'
-          smtp_password: 'password'
+    - cron: '0 5 * * *'  # Daily at 5:00 AM UTC
+  workflow_dispatch:     # Allow manual triggering
 ```
 
-### Exec Now Button
+## Email Content
 
-To manually trigger the email notification, follow these steps:
+- General health reminders
+- Daily inspirational quote
+- Motivational closing message
 
-1. Open the GitHub repository.
-2. Navigate to the "Actions" tab.
-3. Select the "Daily Email Notification" workflow.
-4. Click on the "Run workflow" button to execute the action immediately.
+## API Services Used
+
+- NewsAPI: Retrieve latest health headlines
+- OpenAI: Generate contextual health quotes
+- Mailtrap SMTP: Send emails
