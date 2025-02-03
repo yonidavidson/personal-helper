@@ -22,7 +22,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_TOKEN }}" \
             -d '{
-              "model": "o3-mini",
+              "model": "o1-mini",
               "reasoning_effort": "medium",
               "messages": [
                 {
@@ -33,7 +33,7 @@ jobs:
               "max_tokens": 50,
               "temperature": 0.7
             }')
-            
+
           echo "Full API Response:"
           echo "$RESPONSE" | jq '.'
           QUOTE=$(echo $RESPONSE | jq -r '.choices[0].message.content')
