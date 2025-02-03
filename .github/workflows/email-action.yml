@@ -22,7 +22,7 @@ jobs:
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_TOKEN }}" \
             -d '{
-              "model": "gpt-4o-mini",
+              "model": "o3-mini",
               "messages": [
                 {
                   "role": "user",
