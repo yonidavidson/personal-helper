@@ -23,6 +23,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.OPEN_AI_TOKEN }}" \
             -d '{
               "model": "o3-mini",
+              "reasoning_effort": "medium",
               "messages": [
                 {
                   "role": "user",
